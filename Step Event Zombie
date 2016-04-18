@@ -1,0 +1,40 @@
+//Adaosuri
+if (instance_exists(ob_player))
+{
+  distance_to_player = sqrt(sqr(x - ob_player.x) + sqr(y - ob_player.y));//update the distance to player  
+}
+
+
+//Check if player is within the turret's line of sight
+//AND not behind an obstruction
+if (distance_to_player <= los && instance_exists(ob_player)) && !collision_line(x,y,ob_player.x,ob_player.y,ob_zidlemn1,false,true)
+{
+    pointdir = point_direction(x, y, ob_player.x, ob_player.y);//find the direction to the player
+    image_angle += sin(degtorad(pointdir - image_angle)) * rspeed;//rotate smoothly
+    active = true;//become active
+}
+else if(vedere==false)//otherwise
+{
+    active = false;//deactivate
+}
+if (active==true)
+{
+ mp_potential_step(ob_player.x,ob_player.y,VitezaMiscareZombie,false);
+ image_angle=point_direction(x,y,ob_player.x,ob_player.y);
+}
+else
+{
+ speed=0;
+}
+//Colisiune
+if (instance_exists(ob_player) && distance_to_object(ob_player) <=1)
+{
+    VitezaAtacZm++;
+}else{VitezaAtacZm=0;}
+//DebugAtac
+if (VitezaAtacZm>35)
+{
+    VitezaAtacZm=0;
+}
+
+
